@@ -1,0 +1,77 @@
+@import "node_modules/ol/ol.css";
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.ol-toolbox {
+  position: absolute;
+  top: 25%;
+  left: 0px;
+  border-radius: 0 20px 20px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.ol-toolbox > fieldset > div {
+  margin-top: 10px;
+}
+.ol-toolbox > fieldset > div > button {
+  display: inline-block;
+  padding: 5px;
+  border: none;
+  text-decoration: none;
+  background-color: #055;
+  margin-bottom: 10px;
+  padding: 0.8rem;
+  border-radius: 5px;
+  background-color: #055;
+  color: white;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+#cesiumContainer {
+  height: 100vh;
+  width: 100vw;
+  display: none;
+}
+.Outer {
+  width: 100%;
+}
+.Outer > button {
+  padding: 1rem;
+  width: 100%;
+  display: block;
+}
+
+.inner {
+  display: inline-block;
+  padding: 5px;
+  border: none;
+  text-decoration: none;
+  background-color: #055;
+  margin-bottom: 10px;
+  padding: 0.8rem;
+  border-radius: 5px;
+  background-color: #055;
+  color: white;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+
+.ol-toolbox-1 {
+  position: absolute;
+  top: 25%;
+  right: 0px;
+  border-radius: 20px 0 0 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
