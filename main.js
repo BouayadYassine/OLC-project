@@ -117,6 +117,27 @@ addPolygonButton.addEventListener("click", function () {
   draw.on("drawend", function (event) {
     var feature = event.feature;
     feature.setId(uniqueId++);
+    map.on("click", function (event) {
+      map.forEachFeatureAtPixel(event.pixel, function (feature) {
+        if (selectedFeature) {
+          // unselect previously selected feature
+          selectedFeature.setStyle(undefined);
+        }
+        selectedFeature = feature;
+        // highlight the selected feature
+        feature.setStyle(
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: "blue",
+              width: 2,
+            }),
+            fill: new ol.style.Fill({
+              color: "rgba(0, 0, 255, 0.1)",
+            }),
+          })
+        );
+      });
+    });
   });
   map.addInteraction(draw);
 });
@@ -140,27 +161,7 @@ document.getElementById("stopDrawBtn").addEventListener("click", function () {
 });
 var selectedFeature;
 var uniqueId = 0;
-map.on("click", function (event) {
-  map.forEachFeatureAtPixel(event.pixel, function (feature) {
-    if (selectedFeature) {
-      // unselect previously selected feature
-      selectedFeature.setStyle(undefined);
-    }
-    selectedFeature = feature;
-    // highlight the selected feature
-    feature.setStyle(
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          color: "blue",
-          width: 2,
-        }),
-        fill: new ol.style.Fill({
-          color: "rgba(0, 0, 255, 0.1)",
-        }),
-      })
-    );
-  });
-});
+
 
 document.getElementById("removeBtn").addEventListener("click", function () {
   if (selectedFeature) {
@@ -170,22 +171,18 @@ document.getElementById("removeBtn").addEventListener("click", function () {
   }
 });
 
+
 Cesium.Ion.defaultAccessToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxNWQ0NGIwOS1hZTAyLTQ3ZWItOWRkNC03MmM1YjhiNzRlODIiLCJpZCI6MTI4NDg1LCJpYXQiOjE2Nzg3MDE4Mzh9.zJ44atMh1O4bUYwmRm0iK7dNORRYEUNxQRpdFo6Yh_c";
 
-const viewer = new Cesium.Viewer("cesiumContainer", {
-    terrainProvider: Cesium.createWorldTerrain(),
-});
+const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain()
+  });
+    // Add Cesium OSM Buildings.
+const buildingsTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());
+    
 
-var dataSource = new Cesium.GeoJsonDataSource();
-var promise = dataSource.load("maroc.geojson");
-promise.then(function() {
-  viewer.dataSources.add(dataSource);
-});
-var entities = dataSource.entities.values;
-for (var i = 0; i < entities.length; i++) {
-    var entity = entities[i];
-    if (entity.polygon) {
-        entity.polygon.material = Cesium.Color.RED;
-    }
-}
+var geojsonSourceCesium = new Cesium.GeoJsonDataSource();
+geojsonSourceCesium.load("maroc.geojson");
+viewer.dataSources.add(geojsonSourceCesium);
+viewer.zoomTo(geojsonSourceCesium);
