@@ -10,7 +10,7 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
-    "cesium": "^1.104.0",
+    "cesium": "^1.106.1",
     "ol": "latest"
   }
 }
